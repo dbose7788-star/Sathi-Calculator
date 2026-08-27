@@ -102,7 +102,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         const Align(alignment: Alignment.centerLeft, child: Text('Sathi', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold))),
         const Align(alignment: Alignment.centerLeft, child: Text('Your Everyday Calculation Companion', style: TextStyle(color: Colors.grey, fontSize: 12))),
         const SizedBox(height: 12),
-        if (!widget.isUnlocked) Align(alignment: Alignment.centerLeft, child: Text(widget.isTrialActive ? 'Trial: ${widget.daysLeft} day${widget.daysLeft == 1 ? '' : 's'} remaining' : 'Trial expired', style: TextStyle(color: widget.isTrialActive ? Colors.orange : Colors.red))),
         const SizedBox(height: 10),
         Container(width: double.infinity, padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: const Color(0xFF202020), borderRadius: BorderRadius.circular(16)), child: Align(alignment: Alignment.centerRight, child: Text(display, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 38))),),
         const SizedBox(height: 14),

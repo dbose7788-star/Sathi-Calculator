@@ -27,7 +27,7 @@ class TrialService {
     return {
       'isTrialActive': active,
       'daysRemaining': active ? remaining : 0,
-      'isUnlocked': false,
+      'isUnlocked': true,
     };
   }
 
