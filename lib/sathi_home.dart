@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'scientific_calculator.dart';
+import 'screens/history_screen.dart';
 import 'goods_calculator.dart';
 
 class SathiHome extends StatelessWidget {
@@ -47,6 +48,17 @@ class SathiHome extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (_) => const GoodsCalculator(),
+              ),
+            ),
+          ),
+          _item(
+            context,
+            'History',
+            Icons.history,
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const HistoryScreen(),
               ),
             ),
           ),
