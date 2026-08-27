@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 
-class Skin8Shell extends StatelessWidget {
+class Skin8Shell extends StatefulWidget {
   const Skin8Shell({
     super.key,
     required this.child,
     this.selectedIndex = 0,
+    this.onTabSelected,
   });
 
   final Widget child;
   final int selectedIndex;
+  final ValueChanged<int>? onTabSelected;
 
   static const Color bg = Color(0xFF050A14);
   static const Color panel = Color(0xFF0B1220);
   static const Color cyan = Color(0xFF08C7E8);
   static const Color muted = Color(0xFF8492A8);
+
+  @override
+  State<Skin8Shell> createState() => _Skin8ShellState();
+}
+
+class _Skin8ShellState extends State<Skin8Shell> {
+  bool isDark = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,7 @@ class Skin8Shell extends StatelessWidget {
           children: [
             _header(),
             _tabs(),
-            Expanded(child: child),
+            Expanded(child: widget.child),
             _bottomBar(),
           ],
         ),
@@ -57,8 +66,8 @@ class Skin8Shell extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
               color: cyan,
               borderRadius: BorderRadius.circular(14),
@@ -66,11 +75,11 @@ class Skin8Shell extends StatelessWidget {
             child: const Center(
               child: Text(
                 '⚡',
-                style: TextStyle(fontSize: 28),
+                style: TextStyle(fontSize: 24),
               ),
             ),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: 8),
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +90,7 @@ class Skin8Shell extends StatelessWidget {
                       'SATHI',
                       style: TextStyle(
                         color: cyan,
-                        fontSize: 25,
+                        fontSize: 22,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -94,7 +103,7 @@ class Skin8Shell extends StatelessWidget {
                   'Smart & Goods',
                   style: TextStyle(
                     color: muted,
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -102,8 +111,16 @@ class Skin8Shell extends StatelessWidget {
                   'Calculator',
                   style: TextStyle(
                     color: muted,
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'Developer: Debasish Bose',
+                  style: TextStyle(
+                    color: muted,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -113,29 +130,36 @@ class Skin8Shell extends StatelessWidget {
             'DEG',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
           _headerIcon(Icons.volume_up_outlined),
           const SizedBox(width: 8),
-          _headerIcon(Icons.light_mode_outlined),
+          _headerIcon(
+            isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+            onTap: () => setState(() => isDark = !isDark),
+          ),
         ],
       ),
     );
   }
 
-  Widget _headerIcon(IconData icon) {
+  Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
     return Container(
-      width: 44,
-      height: 44,
+      width: 40,
+      height: 40,
       decoration: BoxDecoration(
         color: panel,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: const Color(0xFF1B2B40)),
       ),
-      child: Icon(icon, color: cyan, size: 27),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onTap,
+        child: Icon(icon, color: cyan, size: 27),
+      ),
     );
   }
 
@@ -157,7 +181,7 @@ class Skin8Shell extends StatelessWidget {
     ];
 
     return Container(
-      height: 74,
+      height: 54,
       decoration: const BoxDecoration(
         border: Border(
           top: BorderSide(color: Color(0xFF18263A)),
@@ -172,11 +196,11 @@ class Skin8Shell extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 7,
-              vertical: 12,
+              horizontal: 5,
+              vertical: 7,
             ),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 color: selected ? cyan : Colors.transparent,
                 borderRadius: BorderRadius.circular(24),
@@ -200,7 +224,7 @@ class Skin8Shell extends StatelessWidget {
                     labels[index],
                     style: TextStyle(
                       color: selected ? Colors.black : muted,
-                      fontSize: 16,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -215,7 +239,7 @@ class Skin8Shell extends StatelessWidget {
 
   Widget _bottomBar() {
     return Container(
-      height: 64,
+      height: 58,
       decoration: const BoxDecoration(
         color: Color(0xFF111111),
       ),
@@ -249,7 +273,7 @@ class _SmartBadge extends StatelessWidget {
         style: TextStyle(
           color: Color(0xFF4DB8E8),
           fontWeight: FontWeight.bold,
-          fontSize: 13,
+          fontSize: 11,
         ),
       ),
     );

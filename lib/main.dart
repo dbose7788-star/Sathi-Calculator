@@ -63,8 +63,27 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   void backspace() => setState(() { expression = expression.isNotEmpty ? expression.substring(0, expression.length - 1) : ''; display = expression.isEmpty ? '0' : expression; });
 
   double _currentValue() {
-    final v = double.tryParse(expression);
-    return v ?? double.tryParse(display.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('−', '-')) ?? 0;
+    try {
+      if (expression.isNotEmpty) {
+        return _evaluate(expression);
+      }
+
+      return double.tryParse(
+            display
+                .replaceAll('×', '*')
+                .replaceAll('÷', '/')
+                .replaceAll('−', '-'),
+          ) ??
+          0;
+    } catch (_) {
+      return double.tryParse(
+            display
+                .replaceAll('×', '*')
+                .replaceAll('÷', '/')
+                .replaceAll('−', '-'),
+          ) ??
+          0;
+    }
   }
 
   void memoryClear() {
