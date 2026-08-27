@@ -149,7 +149,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         const SizedBox(height: 12),
         const SizedBox(height: 10),
         Container(width: double.infinity, padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: const Color(0xFF202020), borderRadius: BorderRadius.circular(16)), child: Align(alignment: Alignment.centerRight, child: Text(display, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 38))),),
-        const SizedBox(height: 14),
+        Row(
+          children: [
+            Expanded(child: _button('MC', memoryClear)),
+            const SizedBox(width: 8),
+            Expanded(child: _button('MR', memoryRecall)),
+            const SizedBox(width: 8),
+            Expanded(child: _button('M+', memoryAdd)),
+            const SizedBox(width: 8),
+            Expanded(child: _button('M−', memorySubtract)),
+            const SizedBox(width: 8),
+            Expanded(child: _button('MS', memoryStore)),
+          ],
+        ),
+        const SizedBox(height: 12),
         Expanded(child: GridView.count(crossAxisCount: 4, mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 1.15, children: [
           _button('C', clear, danger: true), _button('⌫', backspace), _button('%', () { if (expression.isNotEmpty) { final n = double.tryParse(expression); if (n != null) input(''); setState(() { expression = (n! / 100).toString(); display = expression; }); }}), _button('÷', () => input('/'), op: true),
           for (final n in ['7','8','9']) _button(n, () => input(n)), _button('×', () => input('*'), op: true),
