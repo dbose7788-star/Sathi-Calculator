@@ -145,10 +145,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF111111),
       body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 430), child: Padding(padding: const EdgeInsets.all(18), child: Column(children: [
-        const Align(alignment: Alignment.centerLeft, child: Text('Sathi', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold))),
-        const Align(alignment: Alignment.centerLeft, child: Text('Your Everyday Calculation Companion', style: TextStyle(color: Colors.grey, fontSize: 12))),
-        const SizedBox(height: 12),
-        const SizedBox(height: 10),
+        const SizedBox(height: 6),
         Container(width: double.infinity, padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: const Color(0xFF202020), borderRadius: BorderRadius.circular(16)), child: Align(alignment: Alignment.centerRight, child: Text(display, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 38))),),
         Row(
           children: [

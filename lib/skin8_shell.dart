@@ -53,12 +53,12 @@ class Skin8Shell extends StatelessWidget {
   Widget _header() {
     return Container(
       color: bg,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
       child: Row(
         children: [
           Container(
-            width: 54,
-            height: 54,
+            width: 44,
+            height: 44,
             decoration: BoxDecoration(
               color: cyan,
               borderRadius: BorderRadius.circular(14),
@@ -81,7 +81,7 @@ class Skin8Shell extends StatelessWidget {
                       'SATHI',
                       style: TextStyle(
                         color: cyan,
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -94,7 +94,7 @@ class Skin8Shell extends StatelessWidget {
                   'Smart & Goods',
                   style: TextStyle(
                     color: muted,
-                    fontSize: 17,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -102,7 +102,7 @@ class Skin8Shell extends StatelessWidget {
                   'Calculator',
                   style: TextStyle(
                     color: muted,
-                    fontSize: 17,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -113,7 +113,7 @@ class Skin8Shell extends StatelessWidget {
             'DEG',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -128,8 +128,8 @@ class Skin8Shell extends StatelessWidget {
 
   Widget _headerIcon(IconData icon) {
     return Container(
-      width: 54,
-      height: 54,
+      width: 44,
+      height: 44,
       decoration: BoxDecoration(
         color: panel,
         borderRadius: BorderRadius.circular(15),
