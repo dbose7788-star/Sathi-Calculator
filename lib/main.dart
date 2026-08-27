@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'sathi_home.dart';
 import 'services/trial_service.dart';
 
 Future<void> main() async {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Sathi Calculator',
       theme: ThemeData.dark(useMaterial3: true),
-      home: CalculatorScreen(isTrialActive: isTrialActive, daysLeft: daysLeft, isUnlocked: isUnlocked),
+      home: SathiHome(normalScreen: CalculatorScreen(isTrialActive: isTrialActive, daysLeft: daysLeft, isUnlocked: isUnlocked)),
     );
   }
 }
