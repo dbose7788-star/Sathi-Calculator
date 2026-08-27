@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sathi_home.dart';
+import 'calculator_history_service.dart';
 import 'services/trial_service.dart';
 
 Future<void> main() async {
@@ -103,11 +104,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     });
   }
 
-  void calculate() {
+  Future<void> calculate() async {
     if (expression.isEmpty) return;
     try {
       final value = _evaluate(expression);
-      setState(() { display = _format(value); expression = _format(value); justSolved = true; });
+      final result = _format(value); await CalculatorHistoryService.addEntry(expression, result); setState(() { display = result; expression = result; justSolved = true; });
     } catch (_) {
       setState(() { display = 'Error'; expression = ''; justSolved = true; });
     }
