@@ -22,8 +22,10 @@ jobs:
 
       - name: Create Android project
         run: flutter create --platforms=android --project-name=sathi_calculator .
-- name: Remove generated test
-  run: rm -rf test
+
+      - name: Remove generated test
+        run: rm -rf test
+
       - name: Get dependencies
         run: flutter pub get
 
