@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - master
+    - skin8-integration
 
 jobs:
   build:
