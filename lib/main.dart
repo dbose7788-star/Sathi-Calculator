@@ -43,6 +43,8 @@ class CalculatorScreen extends StatefulWidget {
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
   String expression = '';
+  double memory = 0;
+  bool hasMemory = false;
   String display = '0';
   bool justSolved = false;
 
@@ -58,6 +60,48 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   void clear() => setState(() { expression = ''; display = '0'; justSolved = false; });
 
   void backspace() => setState(() { expression = expression.isNotEmpty ? expression.substring(0, expression.length - 1) : ''; display = expression.isEmpty ? '0' : expression; });
+
+  double _currentValue() {
+    final v = double.tryParse(expression);
+    return v ?? double.tryParse(display.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('−', '-')) ?? 0;
+  }
+
+  void memoryClear() {
+    setState(() {
+      memory = 0;
+      hasMemory = false;
+    });
+  }
+
+  void memoryRecall() {
+    if (!hasMemory) return;
+    setState(() {
+      expression = _format(memory);
+      display = expression;
+      justSolved = false;
+    });
+  }
+
+  void memoryAdd() {
+    setState(() {
+      memory += _currentValue();
+      hasMemory = true;
+    });
+  }
+
+  void memorySubtract() {
+    setState(() {
+      memory -= _currentValue();
+      hasMemory = true;
+    });
+  }
+
+  void memoryStore() {
+    setState(() {
+      memory = _currentValue();
+      hasMemory = true;
+    });
+  }
 
   void calculate() {
     if (expression.isEmpty) return;
