@@ -27,7 +27,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: Skin8Shell.bg,
       body: SafeArea(
         child: Column(
           children: [
@@ -40,7 +40,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: cyan,
+        backgroundColor: Skin8Shell.cyan,
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -61,7 +61,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
 
   Widget _header() {
     return Container(
-      color: bg,
+      color: Skin8Shell.bg,
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
       child: Row(
         children: [
@@ -69,7 +69,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: cyan,
+              color: Skin8Shell.cyan,
               borderRadius: BorderRadius.circular(14),
             ),
             child: const Center(
@@ -89,7 +89,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
                     Text(
                       'SATHI',
                       style: TextStyle(
-                        color: cyan,
+                        color: Skin8Shell.cyan,
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
                       ),
@@ -102,7 +102,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
                 Text(
                   'Smart & Goods',
                   style: TextStyle(
-                    color: muted,
+                    color: Skin8Shell.muted,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -110,7 +110,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
                 Text(
                   'Calculator',
                   style: TextStyle(
-                    color: muted,
+                    color: Skin8Shell.muted,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -118,7 +118,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
                 Text(
                   'Developer: Debasish Bose',
                   style: TextStyle(
-                    color: muted,
+                    color: Skin8Shell.muted,
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
                   ),
@@ -151,14 +151,14 @@ class _Skin8ShellState extends State<Skin8Shell> {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: panel,
+        color: Skin8Shell.panel,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: const Color(0xFF1B2B40)),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: onTap,
-        child: Icon(icon, color: cyan, size: 27),
+        child: Icon(icon, color: Skin8Shell.cyan, size: 27),
       ),
     );
   }
@@ -204,7 +204,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                color: selected ? cyan : Colors.transparent,
+                color: selected ? Skin8Shell.cyan : Colors.transparent,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: selected
                     ? const [
@@ -219,13 +219,13 @@ class _Skin8ShellState extends State<Skin8Shell> {
                 children: [
                   Icon(
                     icons[index],
-                    color: selected ? Colors.black : muted,
+                    color: selected ? Colors.black : Skin8Shell.muted,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     labels[index],
                     style: TextStyle(
-                      color: selected ? Colors.black : muted,
+                      color: selected ? Colors.black : Skin8Shell.muted,
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
