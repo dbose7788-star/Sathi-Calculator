@@ -194,7 +194,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
         scrollDirection: Axis.horizontal,
         itemCount: labels.length,
         itemBuilder: (context, index) {
-          final selected = index == selectedIndex;
+          final selected = index == widget.selectedIndex;
 
           return Padding(
             padding: const EdgeInsets.symmetric(
