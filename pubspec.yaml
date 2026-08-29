@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.5.3
+  connectivity_plus: ^6.1.5
   decimal: ^3.2.6
   flutter_tts: ^4.2.5
   cupertino_icons: ^1.0.8

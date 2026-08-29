@@ -4,6 +4,7 @@ import 'goods_calculator.dart';
 import 'screens/history_screen.dart';
 import 'screens/settings_screen.dart';
 import 'skin8_shell.dart';
+import 'soft5g_screen.dart';
 
 class SathiHome extends StatefulWidget {
   const SathiHome({
@@ -30,6 +31,9 @@ class _SathiHomeState extends State<SathiHome> {
         return const HistoryScreen();
       case 4:
         return const SettingsScreen();
+      case 5:
+        return const Soft5GScreen();
+
       case 0:
       default:
         return widget.normalScreen;

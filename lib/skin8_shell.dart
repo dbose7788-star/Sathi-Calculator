@@ -168,6 +168,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
       'CALCULATOR',
       'SCIENTIFIC',
       'GOODS / MATERIAL',
+    'SOFT5G',
       'HISTORY',
       'SETTINGS',
     ];
@@ -176,6 +177,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
       Icons.calculate_outlined,
       Icons.science_outlined,
       Icons.inventory_2_outlined,
+    Icons.signal_cellular_alt,
       Icons.history,
       Icons.settings_outlined,
     ];
