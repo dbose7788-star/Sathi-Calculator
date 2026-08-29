@@ -71,17 +71,6 @@ jobs:
                   return try {
                       val tm = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
 
-                      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                          val info = tm.telephonyDisplayInfo
-                          if (info.overrideNetworkType ==
-                              TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_NR_NSA ||
-                              info.overrideNetworkType ==
-                              TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_NR_ADVANCED
-                          ) {
-                              return "5G"
-                          }
-                      }
-
                       when (tm.dataNetworkType) {
                           TelephonyManager.NETWORK_TYPE_NR -> "5G"
                           TelephonyManager.NETWORK_TYPE_LTE -> "4G"
