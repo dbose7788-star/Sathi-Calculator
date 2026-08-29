@@ -13,6 +13,10 @@ class _ScientificCalculatorState extends State<ScientificCalculator> {
   String display = '0';
   bool degrees = true;
 
+  double? storedValue;
+  String? pendingOperator;
+  bool startNewNumber = false;
+
   double get value => double.tryParse(display) ?? 0;
 
   void setDisplay(double v) {
@@ -26,80 +30,195 @@ class _ScientificCalculatorState extends State<ScientificCalculator> {
   }
 
   String _format(double v) {
-    if (v == v.roundToDouble()) return v.toInt().toString();
-    return v.toStringAsPrecision(15).replaceFirst(RegExp(r'\.?0+$'), '');
+    if (v == v.roundToDouble()) {
+      return v.toInt().toString();
+    }
+    return v.toStringAsPrecision(15).replaceFirst(
+          RegExp(r'\.?0+$'),
+          '',
+        );
   }
 
-  double _angle(double v) => degrees ? v * math.pi / 180 : v;
+  double _angle(double v) =>
+      degrees ? v * math.pi / 180 : v;
 
-  double _fromAngle(double v) => degrees ? v * 180 / math.pi : v;
+  double _fromAngle(double v) =>
+      degrees ? v * 180 / math.pi : v;
 
   void unary(String name) {
     final x = value;
 
     try {
+      double result;
+
       switch (name) {
         case 'sin':
-          setDisplay(math.sin(_angle(x)));
+          result = math.sin(_angle(x));
           break;
         case 'cos':
-          setDisplay(math.cos(_angle(x)));
+          result = math.cos(_angle(x));
           break;
         case 'tan':
-          setDisplay(math.tan(_angle(x)));
+          result = math.tan(_angle(x));
           break;
         case 'asin':
-          setDisplay(_fromAngle(math.asin(x)));
+          result = _fromAngle(math.asin(x));
           break;
         case 'acos':
-          setDisplay(_fromAngle(math.acos(x)));
+          result = _fromAngle(math.acos(x));
           break;
         case 'atan':
-          setDisplay(_fromAngle(math.atan(x)));
+          result = _fromAngle(math.atan(x));
           break;
         case 'ln':
-          setDisplay(math.log(x));
+          if (x <= 0) {
+            setDisplay(double.nan);
+            return;
+          }
+          result = math.log(x);
           break;
         case 'log':
-          setDisplay(math.log(x) / math.ln10);
+          if (x <= 0) {
+            setDisplay(double.nan);
+            return;
+          }
+          result = math.log(x) / math.ln10;
           break;
         case 'sqrt':
-          setDisplay(math.sqrt(x));
+          if (x < 0) {
+            setDisplay(double.nan);
+            return;
+          }
+          result = math.sqrt(x);
           break;
         case 'square':
-          setDisplay(x * x);
+          result = x * x;
           break;
         case 'inverse':
           if (x == 0) {
             setDisplay(double.nan);
-          } else {
-            setDisplay(1 / x);
+            return;
           }
+          result = 1 / x;
           break;
         case 'factorial':
-          if (x < 0 || x != x.floorToDouble() || x > 170) {
+          if (x < 0 ||
+              x != x.floorToDouble() ||
+              x > 170) {
             setDisplay(double.nan);
-          } else {
-            double result = 1;
-            for (int i = 2; i <= x.toInt(); i++) {
-              result *= i;
-            }
-            setDisplay(result);
+            return;
+          }
+
+          result = 1;
+          for (int i = 2; i <= x.toInt(); i++) {
+            result *= i;
           }
           break;
+        default:
+          return;
       }
+
+      setDisplay(result);
+      startNewNumber = true;
     } catch (_) {
       setDisplay(double.nan);
     }
   }
 
+  void binaryOperator(String operator) {
+    if (display == 'Error') {
+      clear();
+      return;
+    }
+
+    final current = value;
+
+    if (storedValue != null && pendingOperator != null) {
+      final result = _calculate(
+        storedValue!,
+        current,
+        pendingOperator!,
+      );
+
+      if (result == null) {
+        setDisplay(double.nan);
+        storedValue = null;
+        pendingOperator = null;
+        return;
+      }
+
+      storedValue = result;
+      setDisplay(result);
+    } else {
+      storedValue = current;
+    }
+
+    pendingOperator = operator;
+    startNewNumber = true;
+  }
+
+  void equals() {
+    if (storedValue == null || pendingOperator == null) {
+      return;
+    }
+
+    final result = _calculate(
+      storedValue!,
+      value,
+      pendingOperator!,
+    );
+
+    if (result == null) {
+      setDisplay(double.nan);
+    } else {
+      setDisplay(result);
+    }
+
+    storedValue = null;
+    pendingOperator = null;
+    startNewNumber = true;
+  }
+
+  double? _calculate(
+    double a,
+    double b,
+    String operator,
+  ) {
+    switch (operator) {
+      case '+':
+        return a + b;
+      case '-':
+        return a - b;
+      case '×':
+        return a * b;
+      case '÷':
+        if (b == 0) return null;
+        return a / b;
+      case 'xʸ':
+        final result = math.pow(a, b).toDouble();
+        if (result.isNaN || result.isInfinite) {
+          return null;
+        }
+        return result;
+      default:
+        return null;
+    }
+  }
+
   void clear() {
-    setState(() => display = '0');
+    setState(() {
+      display = '0';
+      storedValue = null;
+      pendingOperator = null;
+      startNewNumber = false;
+    });
   }
 
   void backspace() {
     setState(() {
-      if (display.length <= 1 || display == 'Error') {
+      if (display == 'Error' ||
+          display.length <= 1 ||
+          (display.startsWith('-') && display.length <= 2)) {
         display = '0';
       } else {
         display = display.substring(0, display.length - 1);
@@ -107,23 +226,44 @@ class _ScientificCalculatorState extends State<ScientificCalculator> {
     });
   }
 
+  void toggleSign() {
+    if (display == '0' || display == 'Error') return;
+
+    setState(() {
+      if (display.startsWith('-')) {
+        display = display.substring(1);
+      } else {
+        display = '-$display';
+      }
+    });
+  }
+
   void input(String text) {
     setState(() {
-      if (display == 'Error') {
+      if (display == 'Error' || startNewNumber) {
         display = '0';
+        startNewNumber = false;
       }
 
       if (text == '.') {
         if (!display.contains('.')) {
           display += '.';
         }
-      } else {
-        if (display == '0') {
-          display = text;
-        } else {
-          display += text;
-        }
+        return;
       }
+
+      if (display == '0') {
+        display = text;
+      } else {
+        display += text;
+      }
+    });
+  }
+
+  void constant(double v) {
+    setState(() {
+      display = _format(v);
+      startNewNumber = true;
     });
   }
 
@@ -164,7 +304,9 @@ class _ScientificCalculatorState extends State<ScientificCalculator> {
         actions: [
           TextButton(
             onPressed: () {
-              setState(() => degrees = !degrees);
+              setState(() {
+                degrees = !degrees;
+              });
             },
             child: Text(
               degrees ? 'DEG' : 'RAD',
@@ -220,28 +362,36 @@ class _ScientificCalculatorState extends State<ScientificCalculator> {
                     button('√', onTap: () => unary('sqrt')),
                     button('x²', onTap: () => unary('square')),
                     button('1/x', onTap: () => unary('inverse')),
-                    button('xʸ', onTap: () {
-                      // Power operation will be added to the
-                      // expression engine in the next step.
-                    }),
+                    button(
+                      'xʸ',
+                      onTap: () => binaryOperator('xʸ'),
+                    ),
 
-                    button('π', onTap: () => setDisplay(math.pi)),
-                    button('e', onTap: () => setDisplay(math.e)),
+                    button('π', onTap: () => constant(math.pi)),
+                    button('e', onTap: () => constant(math.e)),
                     button('n!', onTap: () => unary('factorial')),
                     button('⌫', onTap: backspace),
 
                     button('C', onTap: clear, accent: true),
+                    button('±', onTap: toggleSign),
+                    button('÷', onTap: () => binaryOperator('÷')),
+                    button('×', onTap: () => binaryOperator('×')),
+
                     button('7', onTap: () => input('7')),
                     button('8', onTap: () => input('8')),
                     button('9', onTap: () => input('9')),
+                    button('-', onTap: () => binaryOperator('-')),
 
                     button('4', onTap: () => input('4')),
                     button('5', onTap: () => input('5')),
                     button('6', onTap: () => input('6')),
-                    button('3', onTap: () => input('3')),
+                    button('+', onTap: () => binaryOperator('+')),
 
                     button('1', onTap: () => input('1')),
                     button('2', onTap: () => input('2')),
+                    button('3', onTap: () => input('3')),
+                    button('=', onTap: equals, accent: true),
+
                     button('0', onTap: () => input('0')),
                     button('.', onTap: () => input('.')),
                   ],
