@@ -428,6 +428,26 @@ class _Soft5GScreenState extends State<Soft5GScreen> {
                 ],
               ),
 
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  Expanded(
+                    child: _metric(
+                      Icons.router_outlined,
+                      "VIRTUAL 5G MODEM",
+                      cellular == "5G" ? "ACTIVE" : "READY",
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _metric(
+                      Icons.graphic_eq,
+                      "5G RF DECODER",
+                      cellular == "5G" ? "5G ANALYSIS" : "STANDBY",
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 15),
 
               SizedBox(
