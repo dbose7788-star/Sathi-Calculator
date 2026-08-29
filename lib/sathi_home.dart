@@ -28,11 +28,11 @@ class _SathiHomeState extends State<SathiHome> {
       case 2:
         return const GoodsCalculator();
       case 3:
-        return const HistoryScreen();
-      case 4:
-        return const SettingsScreen();
-      case 5:
         return const Soft5GScreen();
+      case 4:
+        return const HistoryScreen();
+      case 5:
+        return const SettingsScreen();
 
       case 0:
       default:
