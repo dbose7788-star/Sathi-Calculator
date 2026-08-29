@@ -168,7 +168,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
       'CALCULATOR',
       'SCIENTIFIC',
       'GOODS / MATERIAL',
-    'SOFT5G',
+      'SOFT5G',
       'HISTORY',
       'SETTINGS',
     ];
@@ -177,7 +177,7 @@ class _Skin8ShellState extends State<Skin8Shell> {
       Icons.calculate_outlined,
       Icons.science_outlined,
       Icons.inventory_2_outlined,
-    Icons.signal_cellular_alt,
+      Icons.signal_cellular_alt,
       Icons.history,
       Icons.settings_outlined,
     ];
@@ -201,36 +201,42 @@ class _Skin8ShellState extends State<Skin8Shell> {
               horizontal: 5,
               vertical: 7,
             ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: selected ? Skin8Shell.cyan : Colors.transparent,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: selected
-                    ? const [
-                        BoxShadow(
-                          color: Color(0x6608C7E8),
-                          blurRadius: 18,
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    icons[index],
-                    color: selected ? Colors.black : Skin8Shell.muted,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    labels[index],
-                    style: TextStyle(
+            child: InkWell(
+              borderRadius: BorderRadius.circular(24),
+              onTap: () => widget.onTabSelected?.call(index),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: selected ? Skin8Shell.cyan : Colors.transparent,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: selected
+                      ? const [
+                          BoxShadow(
+                            color: Color(0x6608C7E8),
+                            blurRadius: 18,
+                          ),
+                        ]
+                      : null,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      icons[index],
                       color: selected ? Colors.black : Skin8Shell.muted,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Text(
+                      labels[index],
+                      style: TextStyle(
+                        color: selected ? Colors.black : Skin8Shell.muted,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
